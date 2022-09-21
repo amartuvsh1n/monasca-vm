@@ -1,0 +1,54 @@
+---
+monasca-vm_services:
+  memcached:
+    container_name:
+  influxdb:
+    container_name:
+  influxdb-init:
+    container_name:
+  cadvisor:
+    container_name:
+  agent-forwarder:
+    container_name:
+  agent-collector:
+    container_name:
+  zookeeper:
+    container_name:
+  kafka:
+    container_name:
+  kafka-init:
+    container_name:
+  mysql:
+    container_name:
+  mysql-init:
+    container_name:
+  monasca:
+    container_name:
+  monasca-persister:
+    container_name:
+  thresh:    
+    container_name:
+  monasca-notification:  
+    container_name:
+  monasca-statsd:
+    container_name:
+
+  nova-libvirt:
+    container_name: nova_libvirt
+    group: "{{ nova_cell_compute_group }}"
+    enabled: "{{ nova_compute_virt_type in ['kvm', 'qemu'] }}"
+    image: "{{ nova_libvirt_image_full }}"
+    pid_mode: "host"
+    cgroupns_mode: "host"
+    privileged: True
+    volumes: "{{ nova_libvirt_default_volumes + nova_libvirt_extra_volumes }}"
+    dimensions: "{{ nova_libvirt_dimensions }}"
+    healthcheck: "{{ nova_libvirt_healthcheck }}"
+  nova-ssh:
+    container_name: "nova_ssh"
+    group: "{{ nova_cell_compute_group }}"
+    image: "{{ nova_ssh_image_full }}"
+    enabled: "{{ enable_nova_ssh | bool }}"
+    volumes: "{{ nova_ssh_default_volumes + nova_ssh_extra_volumes }}"
+    dimensions: "{{ nova_ssh_dimensions }}"
+    healthcheck: "{{ nova_ssh_healthcheck }}"
